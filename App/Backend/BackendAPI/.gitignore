@@ -1,0 +1,25 @@
+# VS/IDE files
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+
+# Rider/Resharper
+*.DotSettings.user
+
+# Database/SQLite
+*.db
+*.db-shm
+*.db-wal
+
+# HTTP request files (optional)
+*.http
+
+# Logs
+*.log

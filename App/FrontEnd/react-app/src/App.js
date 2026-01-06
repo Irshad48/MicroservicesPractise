@@ -23,7 +23,7 @@ function App() {
 
   //axios is a promise-based HTTP client for the browser and Node.js
   useEffect(() =>{
-    axios.get("https://localhost:7211/api/hello")
+    axios.get("https://localhost:7288/api/Hello")
       .then((response) => {
         setMessage(response.data); // backend returns plain string
       })

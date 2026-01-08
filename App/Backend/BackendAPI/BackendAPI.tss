@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>C:\Irshad\Projects\MicroservicesPractise\App\Backend\BackendAPI\ApiGateway\appsettings.json</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Irshad\Projects\MicroservicesPractise\App\Backend\BackendAPI\BackendProjects\Controllers\HelloController.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Irshad\Projects\MicroservicesPractise\App\Backend\BackendAPI\BackendProjects\Properties\launchSettings.json</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Irshad\Projects\MicroservicesPractise\App\Backend\BackendAPI\ApiGateway\Properties\launchSettings.json</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\Irshad\Projects\MicroservicesPractise\App\Backend\BackendAPI\ApiGateway\Program.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>AppCapabilitiesmicroservice1\microservice1.csproj</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>

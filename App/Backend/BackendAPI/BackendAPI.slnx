@@ -1,4 +1,4 @@
 <Solution>
   <Project Path="ApiGateway/ApiGateway.csproj" Id="6488accb-abcc-4857-aa52-077e6a04915c" />
-  <Project Path="BackendProjects/BackendProjects.csproj" />
+  <Project Path="microservice1/microservice1.csproj" Id="6495d240-a630-45a0-9497-3a5d477c878f" />
 </Solution>

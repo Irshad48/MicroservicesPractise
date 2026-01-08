@@ -22,12 +22,14 @@ function App() {
   }, []);*/
 
   //axios is a promise-based HTTP client for the browser and Node.js
+  //UseEffect hook to fetch data from the backend API when the component mounts
   useEffect(() =>{
-    axios.get("https://localhost:7288/api/Hello")
+    axios.get("https://localhost:7288/api/service1/message")
       .then((response) => {
         setMessage(response.data); // backend returns plain string
       })
       .catch((error) => {
+        
         console.error("Error fetching API:", error);
       });
     }, []

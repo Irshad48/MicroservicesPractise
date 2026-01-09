@@ -39,7 +39,7 @@ namespace microservice1.Controllers
 
             // Best practice - using HttpClientFactory
             //create HttpClient from factory
-            var httpClient = _httpClientFactory.CreateClient();
+            /*var httpClient = _httpClientFactory.CreateClient();
             var response = await httpClient.GetAsync("https://localhost:7132/api/service2/message");
 
             if (!response.IsSuccessStatusCode)
@@ -47,6 +47,16 @@ namespace microservice1.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error calling Microservice 2");
             }
 
+            string messageFromService2 = await response.Content.ReadAsStringAsync();
+            string message = $"Hello from Microservice 1! \n{messageFromService2}";*/
+
+            // Using named client - configured in Program.cs
+            var httpClient = _httpClientFactory.CreateClient("Service2Client");
+            var response = await httpClient.GetAsync("api/service2/message");
+            if (!response.IsSuccessStatusCode)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error calling Microservice 2");
+            }
             string messageFromService2 = await response.Content.ReadAsStringAsync();
             string message = $"Hello from Microservice 1! \n{messageFromService2}";
             return Ok(message);

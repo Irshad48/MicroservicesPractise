@@ -23,8 +23,13 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+//Q - if more services needed?
 // Register HttpClientFactory
-builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("Service2Client", client =>
+{
+    client.BaseAddress =  new Uri("https://localhost:7132/");
+    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+});
 
 var app = builder.Build();
 

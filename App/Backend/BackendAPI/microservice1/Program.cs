@@ -23,6 +23,8 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+// Register HttpClientFactory
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

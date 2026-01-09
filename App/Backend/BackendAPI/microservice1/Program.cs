@@ -28,7 +28,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddHttpClient("Service2Client", client =>
 {
     client.BaseAddress =  new Uri(builder.Configuration["Services:Service2BaseUrl"] ?? throw new InvalidOperationException("Service2BaseUrl is not configured"));
+    // Set default headers if needed - below is an example of setting Accept header to application/json
     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+    // Set timeout as neede. its essential to avoid hanging requests because one slow service can block others
+    client.Timeout = TimeSpan.FromSeconds(30);
 });
 
 var app = builder.Build();

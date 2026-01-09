@@ -27,7 +27,7 @@ builder.Services.AddCors(options =>
 // Register HttpClientFactory
 builder.Services.AddHttpClient("Service2Client", client =>
 {
-    client.BaseAddress =  new Uri("https://localhost:7132/");
+    client.BaseAddress =  new Uri(builder.Configuration["Services:Service2BaseUrl"] ?? throw new InvalidOperationException("Service2BaseUrl is not configured"));
     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 });
 

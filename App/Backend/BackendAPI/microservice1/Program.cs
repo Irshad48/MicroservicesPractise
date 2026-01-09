@@ -1,3 +1,5 @@
+using microservice1.Services;
+using microservice1.Services.Interfaces;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,15 +25,21 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
-//Q - if more services needed?
 // Register HttpClientFactory
-builder.Services.AddHttpClient("Service2Client", client =>
+/*builder.Services.AddHttpClient("Service2Client", client =>
 {
     client.BaseAddress =  new Uri(builder.Configuration["Services:Service2BaseUrl"] ?? throw new InvalidOperationException("Service2BaseUrl is not configured"));
     // Set default headers if needed - below is an example of setting Accept header to application/json
     client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
     // Set timeout as neede. its essential to avoid hanging requests because one slow service can block others
     client.Timeout = TimeSpan.FromSeconds(30);
+});*/
+
+builder.Services.AddHttpClient<IService2Client, Service2Client>(client =>
+{
+    client.BaseAddress =  new Uri(builder.Configuration["Services:Service2BaseUrl"] ?? throw new InvalidOperationException("Service2BaseUrl is not configured"));
+    // Set timeout as neede. its essential to avoid hanging requests because one slow service can block others
+    client.Timeout = TimeSpan.FromSeconds(3);
 });
 
 var app = builder.Build();

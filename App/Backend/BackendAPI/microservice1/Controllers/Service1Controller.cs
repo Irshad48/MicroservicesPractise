@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using microservice1.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace microservice1.Controllers
@@ -8,10 +9,10 @@ namespace microservice1.Controllers
     public class Service1Controller : ControllerBase
     {
         // Using IHttpClientFactory for better HttpClient management - register in Program.cs
-        private readonly IHttpClientFactory _httpClientFactory;
-        public Service1Controller(IHttpClientFactory httpClientFactory)
+        private readonly IService2Client _service2Client;
+        public Service1Controller(IService2Client service2Client)
         {
-            _httpClientFactory = httpClientFactory;
+            _service2Client = service2Client;
         }
 
         [HttpGet("message")]
@@ -51,14 +52,18 @@ namespace microservice1.Controllers
             string message = $"Hello from Microservice 1! \n{messageFromService2}";*/
 
             // Using named client - configured in Program.cs
-            var httpClient = _httpClientFactory.CreateClient("Service2Client");
+            /*var httpClient = _httpClientFactory.CreateClient("Service2Client");
             var response = await httpClient.GetAsync("api/service2/message");
             if (!response.IsSuccessStatusCode)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error calling Microservice 2");
             }
             string messageFromService2 = await response.Content.ReadAsStringAsync();
-            string message = $"Hello from Microservice 1! \n{messageFromService2}";
+            string message = $"Hello from Microservice 1! \n{messageFromService2}";*/
+
+            // Using typed client - IService2Client registered in Program.cs
+            string messageFromService2 = await _service2Client.GetMessageFromService2Async();
+            string message = $"Hello from Microservice 1! \n{messageFromService2}"; 
             return Ok(message);
         }
 

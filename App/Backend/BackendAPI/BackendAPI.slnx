@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="ApiGateway/ApiGateway.csproj" Id="6488accb-abcc-4857-aa52-077e6a04915c" />
+  <Project Path="DepartmentMicroservice/DepartmentMicroservice.csproj" Id="c6a6f020-adb0-4494-9177-c71ab45ca78c" />
+  <Project Path="EmployeeMicroservice/EmployeeMicroservice.csproj" Id="d5561e17-788b-4f85-9403-53c9ed15c879" />
   <Project Path="microservice1/microservice1.csproj" Id="6495d240-a630-45a0-9497-3a5d477c878f" />
   <Project Path="microservice2/microservice2.csproj" Id="4b2c6c8b-2ee9-4c60-ace0-c705be46f7fa" />
 </Solution>

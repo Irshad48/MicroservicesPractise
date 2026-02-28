@@ -1,0 +1,38 @@
+2026-02-08 12:54:06.152 +05:30 [INF] Executed DbCommand (47ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employees] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-08 12:54:06.409 +05:30 [INF] Database seeded successfully
+2026-02-08 12:54:07.110 +05:30 [INF] Starting EmployeeMicroservice
+2026-02-08 12:54:09.013 +05:30 [INF] Now listening on: https://localhost:7149
+2026-02-08 12:54:09.064 +05:30 [INF] Now listening on: http://localhost:5196
+2026-02-08 12:54:09.422 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-08 12:54:09.494 +05:30 [INF] Hosting environment: Development
+2026-02-08 12:54:09.558 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\EmployeeMicroservice
+2026-02-08 13:03:27.686 +05:30 [INF] Executed DbCommand (46ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employees] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-08 13:03:27.820 +05:30 [INF] Database seeded successfully
+2026-02-08 13:03:27.974 +05:30 [INF] Starting EmployeeMicroservice
+2026-02-08 13:03:28.415 +05:30 [INF] Now listening on: https://localhost:7149
+2026-02-08 13:03:28.420 +05:30 [INF] Now listening on: http://localhost:5196
+2026-02-08 13:03:28.496 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-08 13:03:28.499 +05:30 [INF] Hosting environment: Development
+2026-02-08 13:03:28.502 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\EmployeeMicroservice
+2026-02-08 13:03:50.381 +05:30 [INF] HTTP GET / responded 404 in 2.9918 ms
+2026-02-08 13:04:01.386 +05:30 [INF] HTTP GET / responded 307 in 2.9197 ms
+2026-02-08 13:04:01.419 +05:30 [INF] HTTP GET / responded 404 in 0.3636 ms
+2026-02-08 13:04:09.687 +05:30 [INF] HTTP GET / responded 404 in 0.0453 ms
+2026-02-08 13:05:16.464 +05:30 [INF] Getting employee with ID: "bbdd5bfb-ca81-4bed-87b2-8854185c3137"
+2026-02-08 13:05:16.752 +05:30 [INF] Executed DbCommand (72ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-08 13:05:16.964 +05:30 [INF] HTTP GET /api/Employee/BBDD5BFB-CA81-4BED-87B2-8854185C3137 responded 200 in 693.3446 ms

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using EmployeeMicroservice.DTOs.Requests;
-using EmployeeMicroservice.DTOs.Responses;
+using EmployeeMicroservice.DTOs.Requests.Employee;
+using EmployeeMicroservice.DTOs.Responses.Employee;
 using EmployeeMicroservice.Interfaces;
 using EmployeeMicroservice.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq; 
 
 namespace EmployeeMicroservice.Controllers
 {

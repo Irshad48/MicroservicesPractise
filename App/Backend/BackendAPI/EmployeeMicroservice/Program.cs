@@ -5,6 +5,10 @@ using EmployeeMicroservice.Services.Repository;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Scalar.AspNetCore; // Make sure this NuGet package is installed
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +25,22 @@ builder.Host.UseSerilog();
 // Add services to the container.
 builder.Services.AddControllers();
 
+// Add API Versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+    options.ApiVersionReader = new UrlSegmentApiVersionReader();
+});
+
+// Add API Versioning Explorer
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
 // Add DbContext with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -33,14 +53,31 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
 
-// Swagger configuration
-builder.Services.AddSwaggerGen(c =>
+// Add OpenAPI/Swagger document generation
+builder.Services.AddOpenApi("v1", options =>
 {
-    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        document.Info = new()
+        {
+            Title = "Employee Microservice API",
+            Version = "v1",
+            Description = "A modern employee management microservice with best practices",
+            Contact = new()
+            {
+                Name = "Development Team",
+                Email = "dev@company.com"
+            },
+            License = new()
+            {
+                Name = "Private - Internal Use Only"
+            }
+        };
+        return Task.CompletedTask;
+    });
 });
 
+// Add CORS
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -56,26 +93,48 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "EmployeeMicroservice API V1"); });
+    // Map OpenAPI endpoint
+    app.MapOpenApi();
 
-    // Seed database in development
+    // Map Scalar UI for API documentation - Corrected configuration
+    app.MapScalarApiReference(options =>
+    {
+        // Basic configuration that works with current Scalar version
+        options.Title = "Employee Microservice API";
+        options.Theme = ScalarTheme.Purple;
+        options.DefaultHttpClient = new KeyValuePair<ScalarTarget, ScalarClient>(ScalarTarget.CSharp, ScalarClient.HttpClient);
+    });
+
+    // FIXED: Create database and tables, THEN seed
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
         try
         {
+            var context = services.GetRequiredService<ApplicationDbContext>();
+
+            // IMPORTANT: This creates the database and tables if they don't exist
+            Log.Information("Ensuring database is created...");
+            await context.Database.EnsureCreatedAsync();
+
+            // Now seed the data
+            Log.Information("Seeding database...");
             await SeedData.Initialize(services);
-            Log.Information("Database seeded successfully");
+
+            Log.Information("Database setup completed successfully");
         }
         catch (Exception ex)
         {
-            Log.Error(ex, "An error occurred seeding the database.");
+            Log.Error(ex, "An error occurred setting up the database.");
         }
     }
 }
+else
+{
+    app.UseHsts();
+}
 
-app.UseSerilogRequestLogging(); // Add Serilog HTTP request logging
+app.UseSerilogRequestLogging();
 
 app.UseCors();
 
@@ -87,7 +146,7 @@ app.MapControllers();
 
 try
 {
-    Log.Information("Starting EmployeeMicroservice");
+    Log.Information("Starting EmployeeMicroservice with OpenAPI and Scalar UI");
     app.Run();
 }
 catch (Exception ex)

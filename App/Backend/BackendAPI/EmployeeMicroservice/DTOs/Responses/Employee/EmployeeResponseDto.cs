@@ -1,6 +1,6 @@
-﻿using System;
+﻿using EmployeeMicroservice.DTOs.Responses.EmployeeSkill;
 
-namespace EmployeeMicroservice.DTOs.Responses
+namespace EmployeeMicroservice.DTOs.Responses.Employee
 {
     public class EmployeeResponseDto
     {
@@ -15,5 +15,8 @@ namespace EmployeeMicroservice.DTOs.Responses
         public bool IsActive { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        // Add this if you want skills included in employee response
+        public List<EmployeeSkillResponseDto>? Skills { get; set; }
     }
 }

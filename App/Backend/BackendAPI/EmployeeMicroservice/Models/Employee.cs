@@ -1,4 +1,6 @@
-﻿namespace EmployeeMicroservice.Models
+﻿using EmployeeMicroservice.Models.Entities;
+
+namespace EmployeeMicroservice.Models
 {
     public class Employee
     {
@@ -13,5 +15,8 @@
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? UpdatedAt { get; set; }
+
+        //navigation properties
+        public virtual ICollection<EmployeeSkill> EmployeeSkills { get; set; }
     }
 }

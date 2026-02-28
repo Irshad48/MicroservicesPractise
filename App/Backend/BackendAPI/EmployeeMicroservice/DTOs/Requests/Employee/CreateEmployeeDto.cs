@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeMicroservice.DTOs.Requests
+namespace EmployeeMicroservice.DTOs.Requests.Employee
 {
     public class CreateEmployeeDto
     {
@@ -30,6 +30,6 @@ namespace EmployeeMicroservice.DTOs.Requests
         public decimal Salary { get; set; }
 
         [Required]
-        public int DepartmentId { get; set; }
+        public Guid DepartmentId { get; set; }
     }
 }

@@ -70,3 +70,744 @@ UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
 OUTPUT 1
 WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
 2026-02-28 06:37:53.649 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 812.8460 ms
+2026-02-28 07:09:18.587 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:09:20.056 +05:30 [INF] Executed DbCommand (44ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:09:20.172 +05:30 [INF] Executed DbCommand (77ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+        FROM [sys].[extended_properties] AS [ep]
+        WHERE [ep].[minor_id] = 0
+            AND [ep].[class] = 1
+            AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2026-02-28 07:09:20.183 +05:30 [INF] Seeding database...
+2026-02-28 07:09:20.187 +05:30 [INF] Starting database seed...
+2026-02-28 07:09:20.575 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employees] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 07:09:20.603 +05:30 [INF] Database already has employees, skipping seed
+2026-02-28 07:09:20.614 +05:30 [INF] Database setup completed successfully
+2026-02-28 07:09:20.747 +05:30 [INF] Starting EmployeeMicroservice with OpenAPI and Scalar UI
+2026-02-28 07:09:21.142 +05:30 [INF] Now listening on: https://localhost:7149
+2026-02-28 07:09:21.147 +05:30 [INF] Now listening on: http://localhost:5196
+2026-02-28 07:09:21.452 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:09:21.457 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:09:21.463 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\EmployeeMicroservice
+2026-02-28 07:09:34.528 +05:30 [INF] HTTP GET /scalar/v1 responded 200 in 71.6378 ms
+2026-02-28 07:09:35.086 +05:30 [INF] HTTP GET /openapi/v1.json responded 200 in 27.3185 ms
+2026-02-28 07:10:09.655 +05:30 [INF] Deleting employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a"
+2026-02-28 07:10:09.876 +05:30 [INF] Executed DbCommand (38ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 07:10:10.183 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Employees] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2026-02-28 07:10:10.215 +05:30 [INF] Employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a" deleted successfully
+2026-02-28 07:10:10.228 +05:30 [INF] HTTP DELETE /api/Employee/88EE8C49-654F-4532-9522-01AE5FAC031A responded 204 in 884.4827 ms
+2026-02-28 07:10:30.797 +05:30 [INF] Deleting employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a"
+2026-02-28 07:10:30.809 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 07:10:30.822 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Employees] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2026-02-28 07:10:30.830 +05:30 [INF] Employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a" deleted successfully
+2026-02-28 07:10:30.836 +05:30 [INF] HTTP DELETE /api/Employee/88EE8C49-654F-4532-9522-01AE5FAC031A responded 204 in 44.0284 ms
+2026-02-28 07:30:46.925 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:30:48.385 +05:30 [INF] Executed DbCommand (43ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:30:48.477 +05:30 [INF] Executed DbCommand (58ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+        FROM [sys].[extended_properties] AS [ep]
+        WHERE [ep].[minor_id] = 0
+            AND [ep].[class] = 1
+            AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2026-02-28 07:30:48.487 +05:30 [INF] Seeding database...
+2026-02-28 07:30:48.494 +05:30 [INF] Starting database seed...
+2026-02-28 07:30:48.902 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employees] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 07:30:48.925 +05:30 [INF] Database already has employees, skipping seed
+2026-02-28 07:30:48.934 +05:30 [INF] Database setup completed successfully
+2026-02-28 07:30:49.126 +05:30 [INF] Starting EmployeeMicroservice with OpenAPI and Scalar UI
+2026-02-28 07:30:49.564 +05:30 [INF] Now listening on: https://localhost:7149
+2026-02-28 07:30:49.569 +05:30 [INF] Now listening on: http://localhost:5196
+2026-02-28 07:30:49.986 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:30:49.989 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:30:49.993 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\EmployeeMicroservice
+2026-02-28 07:31:08.113 +05:30 [INF] HTTP GET /scalar/v1 responded 200 in 68.0735 ms
+2026-02-28 07:31:08.666 +05:30 [INF] HTTP GET /openapi/v1.json responded 200 in 30.7436 ms
+2026-02-28 07:31:50.957 +05:30 [INF] Deleting employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a"
+2026-02-28 07:31:51.189 +05:30 [INF] Executed DbCommand (36ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 07:31:51.341 +05:30 [INF] HTTP DELETE /api/Employee/88EE8C49-654F-4532-9522-01AE5FAC031A responded 204 in 718.9693 ms
+2026-02-28 07:32:20.714 +05:30 [INF] Deleting employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a"
+2026-02-28 07:32:20.728 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 07:32:20.740 +05:30 [INF] HTTP DELETE /api/Employee/88EE8C49-654F-4532-9522-01AE5FAC031A responded 204 in 30.3850 ms
+2026-02-28 07:32:23.972 +05:30 [INF] Deleting employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a"
+2026-02-28 07:32:23.979 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 07:32:23.985 +05:30 [INF] HTTP DELETE /api/Employee/88EE8C49-654F-4532-9522-01AE5FAC031A responded 204 in 16.4038 ms
+2026-02-28 07:33:09.592 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:33:11.142 +05:30 [INF] Executed DbCommand (39ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:33:11.237 +05:30 [INF] Executed DbCommand (56ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+        FROM [sys].[extended_properties] AS [ep]
+        WHERE [ep].[minor_id] = 0
+            AND [ep].[class] = 1
+            AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2026-02-28 07:33:11.246 +05:30 [INF] Seeding database...
+2026-02-28 07:33:11.251 +05:30 [INF] Starting database seed...
+2026-02-28 07:33:11.660 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employees] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 07:33:11.685 +05:30 [INF] Database already has employees, skipping seed
+2026-02-28 07:33:11.692 +05:30 [INF] Database setup completed successfully
+2026-02-28 07:33:11.842 +05:30 [INF] Starting EmployeeMicroservice with OpenAPI and Scalar UI
+2026-02-28 07:33:12.245 +05:30 [INF] Now listening on: https://localhost:7149
+2026-02-28 07:33:12.249 +05:30 [INF] Now listening on: http://localhost:5196
+2026-02-28 07:33:12.603 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:33:12.607 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:33:12.611 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\EmployeeMicroservice
+2026-02-28 07:33:14.266 +05:30 [INF] HTTP GET /scalar/v1 responded 200 in 67.7203 ms
+2026-02-28 07:33:14.740 +05:30 [INF] HTTP GET /openapi/v1.json responded 200 in 24.1844 ms
+2026-02-28 07:33:27.735 +05:30 [INF] Deleting employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a"
+2026-02-28 07:33:28.196 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 07:33:50.671 +05:30 [INF] Executed DbCommand (4,258ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Employees] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [Id] = @p1;
+2026-02-28 07:33:52.026 +05:30 [INF] Employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a" deleted successfully
+2026-02-28 07:33:54.313 +05:30 [INF] HTTP DELETE /api/Employee/88EE8C49-654F-4532-9522-01AE5FAC031A responded 204 in 29567.2284 ms
+2026-02-28 07:42:13.145 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:42:14.739 +05:30 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:42:14.846 +05:30 [INF] Executed DbCommand (66ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+        FROM [sys].[extended_properties] AS [ep]
+        WHERE [ep].[minor_id] = 0
+            AND [ep].[class] = 1
+            AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2026-02-28 07:42:14.858 +05:30 [INF] Seeding database...
+2026-02-28 07:42:14.865 +05:30 [INF] Starting database seed...
+2026-02-28 07:42:15.304 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Employees] AS [e]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 07:42:15.333 +05:30 [INF] Database already has employees, skipping seed
+2026-02-28 07:42:15.344 +05:30 [INF] Database setup completed successfully
+2026-02-28 07:42:15.513 +05:30 [INF] Starting EmployeeMicroservice with OpenAPI and Scalar UI
+2026-02-28 07:42:15.898 +05:30 [INF] Now listening on: https://localhost:7149
+2026-02-28 07:42:15.903 +05:30 [INF] Now listening on: http://localhost:5196
+2026-02-28 07:42:16.257 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:42:16.262 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:42:16.267 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\EmployeeMicroservice
+2026-02-28 08:16:43.710 +05:30 [INF] Patching employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a"
+2026-02-28 08:16:44.000 +05:30 [INF] Executed DbCommand (35ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:16:44.262 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Employees] SET [DepartmentId] = @p0, [UpdatedAt] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+2026-02-28 08:16:44.306 +05:30 [INF] Employee with ID: "88ee8c49-654f-4532-9522-01ae5fac031a" patched successfully
+2026-02-28 08:16:44.348 +05:30 [INF] HTTP PATCH /api/Employee/88EE8C49-654F-4532-9522-01AE5FAC031A responded 200 in 983.8950 ms
+2026-02-28 08:17:02.248 +05:30 [INF] Patching employee with ID: "97446fd9-900e-4b2c-aed4-0c2674c43547"
+2026-02-28 08:17:02.266 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:17:02.281 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Employees] SET [DepartmentId] = @p0, [UpdatedAt] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+2026-02-28 08:17:02.291 +05:30 [INF] Employee with ID: "97446fd9-900e-4b2c-aed4-0c2674c43547" patched successfully
+2026-02-28 08:17:02.300 +05:30 [INF] HTTP PATCH /api/Employee/97446FD9-900E-4B2C-AED4-0C2674C43547 responded 200 in 58.1521 ms
+2026-02-28 08:17:25.287 +05:30 [INF] Patching employee with ID: "4b925244-e775-4443-9337-1faeed6153ae"
+2026-02-28 08:17:25.297 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:17:25.313 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Employees] SET [DepartmentId] = @p0, [UpdatedAt] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+2026-02-28 08:17:25.324 +05:30 [INF] Employee with ID: "4b925244-e775-4443-9337-1faeed6153ae" patched successfully
+2026-02-28 08:17:25.330 +05:30 [INF] HTTP PATCH /api/Employee/4B925244-E775-4443-9337-1FAEED6153AE responded 200 in 48.3515 ms
+2026-02-28 08:17:57.293 +05:30 [INF] Patching employee with ID: "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:17:57.302 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:17:57.322 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p2='?' (DbType = Guid), @p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [Employees] SET [DepartmentId] = @p0, [UpdatedAt] = @p1
+OUTPUT 1
+WHERE [Id] = @p2;
+2026-02-28 08:17:57.333 +05:30 [INF] Employee with ID: "e605f483-6404-42c9-a899-b18cec3ccd47" patched successfully
+2026-02-28 08:17:57.338 +05:30 [INF] HTTP PATCH /api/Employee/E605F483-6404-42C9-A899-B18CEC3CCD47 responded 200 in 47.0153 ms
+2026-02-28 08:19:16.055 +05:30 [INF] Assigning skill "4e386634-6dcc-4085-9952-6630e38f0661" to employee "97446fd9-900e-4b2c-aed4-0c2674c43547"
+2026-02-28 08:19:18.378 +05:30 [INF] Executed DbCommand (2,317ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:19:18.413 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:19:18.475 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:19:18.630 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:19:18.666 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:19:18.713 +05:30 [INF] Executed DbCommand (7ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:19:18.780 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 2753.5618 ms
+2026-02-28 08:19:34.971 +05:30 [INF] Assigning skill "68d88da2-8a84-4646-b212-de36e1ed0905" to employee "97446fd9-900e-4b2c-aed4-0c2674c43547"
+2026-02-28 08:19:34.978 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:19:34.991 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:19:35.005 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:19:35.020 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:19:35.034 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:19:35.051 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = Boolean), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:19:35.066 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 99.8796 ms
+2026-02-28 08:19:46.087 +05:30 [INF] Assigning skill "46ca7c96-e670-4756-9b43-ed550822f1cb" to employee "97446fd9-900e-4b2c-aed4-0c2674c43547"
+2026-02-28 08:19:46.093 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:19:46.105 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:19:46.113 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:19:46.123 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:19:46.132 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:19:46.142 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:19:46.151 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 65.0978 ms
+2026-02-28 08:20:34.985 +05:30 [INF] Assigning skill "bc026d4c-75d9-47bc-9291-dfc973ae2e25" to employee "4b925244-e775-4443-9337-1faeed6153ae"
+2026-02-28 08:20:35.000 +05:30 [INF] Executed DbCommand (9ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:20:35.011 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:20:35.023 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:20:35.035 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:20:35.046 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:20:35.062 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+2026-02-28 08:20:35.070 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 85.8062 ms
+2026-02-28 08:21:31.060 +05:30 [INF] Assigning skill "99f9905b-7605-49a3-85ee-2fe72642c2a8" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:21:31.084 +05:30 [INF] Executed DbCommand (17ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:21:31.098 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:21:31.110 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:21:31.121 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:21:31.130 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:21:31.140 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+2026-02-28 08:21:31.147 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 124.5500 ms
+2026-02-28 08:21:36.905 +05:30 [INF] Assigning skill "7611b660-5e82-448e-a559-3f14a85fd682" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:21:36.912 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:21:36.922 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:21:36.931 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:21:36.944 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:21:36.954 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:21:36.970 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:21:36.980 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 75.9370 ms
+2026-02-28 08:21:43.267 +05:30 [INF] Assigning skill "4e386634-6dcc-4085-9952-6630e38f0661" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:21:43.273 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:21:43.280 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:21:43.291 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:21:43.301 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:21:43.310 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:21:43.334 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:21:43.342 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 76.2995 ms
+2026-02-28 08:21:49.459 +05:30 [INF] Assigning skill "62cd384a-1e2a-4f41-ac80-76e6254c0272" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:21:49.466 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:21:49.513 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:21:49.523 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:21:49.535 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:21:49.545 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:21:49.560 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = Boolean), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:21:49.573 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 115.2614 ms
+2026-02-28 08:21:56.396 +05:30 [INF] Assigning skill "9582b991-014e-4020-befa-ae1e2d913a4c" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:21:56.404 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:21:56.414 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:21:56.425 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:21:56.440 +05:30 [INF] Executed DbCommand (5ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:21:56.453 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:21:56.463 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = Boolean), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:21:56.473 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 77.6425 ms
+2026-02-28 08:22:03.441 +05:30 [INF] Assigning skill "42d675c8-de80-4e8e-9c43-d4e4ffe70f20" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:22:03.447 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:22:03.457 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:22:03.464 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:22:03.474 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:22:03.484 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:22:03.496 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:22:03.508 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 77.1521 ms
+2026-02-28 08:22:10.224 +05:30 [INF] Assigning skill "00840a75-8cc7-43de-93f4-d832b1dbbbf6" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:22:10.233 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:22:10.243 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:22:10.256 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:22:10.270 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:22:10.281 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:22:10.294 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:22:10.306 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 83.1005 ms
+2026-02-28 08:22:15.642 +05:30 [INF] Assigning skill "68d88da2-8a84-4646-b212-de36e1ed0905" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:22:15.648 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:22:15.657 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:22:15.666 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:22:15.677 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:22:15.686 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:22:15.693 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = Boolean), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:22:15.703 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 62.2263 ms
+2026-02-28 08:22:22.810 +05:30 [INF] Assigning skill "bc026d4c-75d9-47bc-9291-dfc973ae2e25" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:22:22.822 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:22:22.836 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:22:22.848 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:22:22.859 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:22:22.871 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:22:22.881 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = Boolean), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:22:22.890 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 81.4945 ms
+2026-02-28 08:22:29.317 +05:30 [INF] Assigning skill "46ca7c96-e670-4756-9b43-ed550822f1cb" to employee "e605f483-6404-42c9-a899-b18cec3ccd47"
+2026-02-28 08:22:29.324 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [e].[Id], [e].[CreatedAt], [e].[DateOfBirth], [e].[DepartmentId], [e].[Email], [e].[FirstName], [e].[IsActive], [e].[LastName], [e].[Position], [e].[Salary], [e].[UpdatedAt]
+FROM [Employees] AS [e]
+WHERE [e].[Id] = @p
+2026-02-28 08:22:29.334 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@p='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [s].[Id], [s].[Category], [s].[CreatedAt], [s].[Name], [s].[UpdatedAt]
+FROM [Skills] AS [s]
+WHERE [s].[Id] = @p
+2026-02-28 08:22:29.342 +05:30 [INF] Executed DbCommand (0ms) [Parameters=[@employeeId='?' (DbType = Guid), @skillId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [EmployeeSkills] AS [e]
+        WHERE [e].[EmployeeId] = @employeeId AND [e].[SkillId] = @skillId) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 08:22:29.354 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime2), @p3='?' (DbType = DateTime2), @p4='?' (DbType = Boolean), @p5='?' (DbType = Int32), @p6='?' (DbType = DateTime2), @p7='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [EmployeeSkills] ([EmployeeId], [SkillId], [AcquiredDate], [CreatedAt], [IsPrimarySkill], [ProficiencyLevel], [UpdatedAt], [YearsOfExperience])
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-02-28 08:22:29.371 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@employeeId='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT [e].[EmployeeId], [e].[SkillId], [e].[AcquiredDate], [e].[CreatedAt], [e].[IsPrimarySkill], [e].[ProficiencyLevel], [e].[UpdatedAt], [e].[YearsOfExperience]
+FROM [EmployeeSkills] AS [e]
+WHERE [e].[EmployeeId] = @employeeId
+2026-02-28 08:22:29.386 +05:30 [INF] Executed DbCommand (1ms) [Parameters=[@p1='?' (DbType = Guid), @p2='?' (DbType = Guid), @p0='?' (DbType = DateTime2), @p4='?' (DbType = Guid), @p5='?' (DbType = Guid), @p3='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [EmployeeSkills] SET [UpdatedAt] = @p0
+OUTPUT 1
+WHERE [EmployeeId] = @p1 AND [SkillId] = @p2;
+UPDATE [EmployeeSkills] SET [IsPrimarySkill] = @p3
+OUTPUT 1
+WHERE [EmployeeId] = @p4 AND [SkillId] = @p5;
+2026-02-28 08:22:29.399 +05:30 [INF] HTTP POST /api/EmployeeSkill responded 201 in 84.2731 ms

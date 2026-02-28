@@ -160,6 +160,62 @@ namespace EmployeeMicroservice.Controllers
                 return HandleError(ex, $"updating employee with ID {id}");
             }
         }
+        // PATCH: api/employee/{id}
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchEmployee(Guid id, [FromBody] UpdateEmployeeDto patchDto)
+        {
+            try
+            {
+                _logger.LogInformation("Patching employee with ID: {Id}", id);
+
+                var existingEmployee = await _unitOfWork.Employees.GetByIdAsync(id);
+                if (existingEmployee == null)
+                {
+                    return NotFoundResponse("Employee", id);
+                }
+
+                // If email provided, validate uniqueness
+                if (!string.IsNullOrEmpty(patchDto.Email) && patchDto.Email != existingEmployee.Email)
+                {
+                    if (await _unitOfWork.Employees.EmailExistsAsync(patchDto.Email, id))
+                    {
+                        return BadRequestResponse($"Email '{patchDto.Email}' is already in use.");
+                    }
+                }
+
+                // Apply only provided fields
+                if (patchDto.FirstName != null) existingEmployee.FirstName = patchDto.FirstName;
+                if (patchDto.LastName != null) existingEmployee.LastName = patchDto.LastName;
+                if (patchDto.Email != null) existingEmployee.Email = patchDto.Email;
+                if (patchDto.DateOfBirth.HasValue) existingEmployee.DateOfBirth = patchDto.DateOfBirth.Value;
+                if (patchDto.Position != null) existingEmployee.Position = patchDto.Position;
+                if (patchDto.Salary.HasValue) existingEmployee.Salary = patchDto.Salary.Value;
+                if (patchDto.DepartmentId.HasValue) existingEmployee.DepartmentId = patchDto.DepartmentId.Value;
+                if (patchDto.IsActive.HasValue) existingEmployee.IsActive = patchDto.IsActive.Value;
+
+                existingEmployee.UpdatedAt = DateTime.UtcNow;
+
+                var updatedEmployee = await _unitOfWork.Employees.UpdateAsync(id, existingEmployee);
+                if (updatedEmployee == null)
+                {
+                    return BadRequestResponse("Failed to update employee.");
+                }
+
+                var saved = await _unitOfWork.SaveChangesAsync();
+                if (!saved)
+                {
+                    return BadRequestResponse("Failed to save updated employee to database.");
+                }
+
+                var employeeDto = _mapper.Map<EmployeeResponseDto>(updatedEmployee);
+                _logger.LogInformation("Employee with ID: {Id} patched successfully", id);
+                return Ok(employeeDto);
+            }
+            catch (Exception ex)
+            {
+                return HandleError(ex, $"patching employee with ID {id}");
+            }
+        }
 
         // DELETE: api/employee/{id}
         [HttpDelete("{id}")]
@@ -169,31 +225,39 @@ namespace EmployeeMicroservice.Controllers
             {
                 _logger.LogInformation("Deleting employee with ID: {Id}", id);
 
-                // Check if employee exists
                 var employee = await _unitOfWork.Employees.GetByIdAsync(id);
                 if (employee == null)
                 {
                     return NotFoundResponse("Employee", id);
                 }
 
-                // Soft delete (set IsActive to false) instead of hard delete
-                employee.IsActive = false;
-                var updated = await _unitOfWork.Employees.UpdateAsync(id, employee);
+                // Idempotent behavior: if already soft-deleted, return 204 No Content
+                if (!employee.IsActive)
+                {
+                    return NoContent();
+                }
 
+                // Soft delete
+                employee.IsActive = false;
+                employee.UpdatedAt = DateTime.UtcNow;
+
+                var updated = await _unitOfWork.Employees.UpdateAsync(id, employee);
                 if (updated == null)
                 {
                     return BadRequestResponse("Failed to delete employee.");
                 }
 
-                // Save changes
                 var saved = await _unitOfWork.SaveChangesAsync();
                 if (!saved)
                 {
                     return BadRequestResponse("Failed to save deletion to database.");
                 }
 
+                // Return the updated resource so clients can see IsActive/UpdatedAt
+                var dto = _mapper.Map<EmployeeResponseDto>(updated);
+
                 _logger.LogInformation("Employee with ID: {Id} deleted successfully", id);
-                return NoContent();
+                return Ok(dto);
             }
             catch (Exception ex)
             {

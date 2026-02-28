@@ -1,0 +1,218 @@
+2026-02-28 07:02:21.892 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:02:23.233 +05:30 [ERR] An error occurred while ensuring the database.
+System.InvalidOperationException: The ConnectionString property has not been initialized.
+   at Microsoft.Data.SqlClient.SqlConnection.PermissionDemand()
+   at Microsoft.Data.SqlClient.SqlConnectionFactory.PermissionDemand(DbConnection outerConnection)
+   at Microsoft.Data.ProviderBase.DbConnectionInternal.TryOpenConnectionInternal(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.ProviderBase.DbConnectionClosed.TryOpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory, TaskCompletionSource`1 retry, DbConnectionOptions userOptions)
+   at Microsoft.Data.SqlClient.SqlConnection.TryOpen(TaskCompletionSource`1 retry, SqlConnectionOverrides overrides)
+   at Microsoft.Data.SqlClient.SqlConnection.Open(SqlConnectionOverrides overrides)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerConnection.OpenDbConnection(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternal(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.Open(Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.<>c__DisplayClass18_0.<Exists>b__0(DateTime giveUp)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.<>c__DisplayClass12_0`2.<Execute>b__0(DbContext _, TState s)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.ExecutionStrategyExtensions.Execute[TState,TResult](IExecutionStrategy strategy, TState state, Func`2 operation, Func`2 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.Exists(Boolean retryOnNotExists)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerDatabaseCreator.Exists()
+   at Microsoft.EntityFrameworkCore.Storage.RelationalDatabaseCreator.EnsureCreated()
+   at Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade.EnsureCreated()
+   at Program.<Main>$(String[] args) in C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\DepartmentMicroservice\Program.cs:line 118
+2026-02-28 07:02:23.438 +05:30 [INF] Starting DepartmentMicroservice
+2026-02-28 07:02:24.050 +05:30 [INF] Now listening on: https://localhost:7022
+2026-02-28 07:02:24.064 +05:30 [INF] Now listening on: http://localhost:5202
+2026-02-28 07:02:24.194 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:02:24.198 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:02:24.201 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\DepartmentMicroservice
+2026-02-28 07:03:55.141 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:03:56.174 +05:30 [INF] Executed DbCommand (26ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:03:56.267 +05:30 [INF] Executed DbCommand (56ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+        FROM [sys].[extended_properties] AS [ep]
+        WHERE [ep].[minor_id] = 0
+            AND [ep].[class] = 1
+            AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2026-02-28 07:03:56.278 +05:30 [INF] Database ensured.
+2026-02-28 07:03:56.402 +05:30 [INF] Starting DepartmentMicroservice
+2026-02-28 07:03:56.765 +05:30 [INF] Now listening on: https://localhost:7022
+2026-02-28 07:03:56.769 +05:30 [INF] Now listening on: http://localhost:5202
+2026-02-28 07:03:56.850 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:03:56.856 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:03:56.861 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\DepartmentMicroservice
+2026-02-28 07:05:13.657 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:05:15.000 +05:30 [INF] Executed DbCommand (239ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+CREATE DATABASE [DepartmentMicroserviceDb];
+2026-02-28 07:05:15.217 +05:30 [INF] Executed DbCommand (198ms) [Parameters=[], CommandType='"Text"', CommandTimeout='60']
+IF SERVERPROPERTY('EngineEdition') <> 5
+BEGIN
+    ALTER DATABASE [DepartmentMicroserviceDb] SET READ_COMMITTED_SNAPSHOT ON;
+END;
+2026-02-28 07:05:15.248 +05:30 [INF] Executed DbCommand (8ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:05:15.355 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE [Departments] (
+    [Id] uniqueidentifier NOT NULL DEFAULT (NEWID()),
+    [Name] nvarchar(200) NOT NULL,
+    [Description] nvarchar(1000) NULL,
+    [IsActive] bit NOT NULL DEFAULT CAST(1 AS bit),
+    [CreatedAt] datetime2 NOT NULL DEFAULT (GETDATE()),
+    [UpdatedAt] datetime2 NULL,
+    CONSTRAINT [PK_Departments] PRIMARY KEY ([Id])
+);
+2026-02-28 07:05:15.369 +05:30 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE INDEX [IX_Departments_Name] ON [Departments] ([Name]);
+2026-02-28 07:05:15.387 +05:30 [INF] Database ensured.
+2026-02-28 07:05:15.515 +05:30 [INF] Starting DepartmentMicroservice
+2026-02-28 07:05:15.854 +05:30 [INF] Now listening on: https://localhost:7022
+2026-02-28 07:05:15.858 +05:30 [INF] Now listening on: http://localhost:5202
+2026-02-28 07:05:15.917 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:05:15.921 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:05:15.924 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\DepartmentMicroservice
+2026-02-28 07:05:58.010 +05:30 [INF] HTTP GET /scalar responded 404 in 3.4489 ms
+2026-02-28 07:06:18.459 +05:30 [INF] HTTP GET /scalar/v1 responded 200 in 67.9473 ms
+2026-02-28 07:06:19.103 +05:30 [INF] HTTP GET /openapi/v1.json responded 200 in 16.7226 ms
+2026-02-28 07:06:19.598 +05:30 [INF] HTTP GET /favicon.ico responded 404 in 0.0329 ms
+2026-02-28 07:06:54.823 +05:30 [INF] Executed DbCommand (60ms) [Parameters=[@ToLower='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Departments] AS [d]
+        WHERE [d].[IsActive] = CAST(1 AS bit) AND LOWER([d].[Name]) = @ToLower) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 07:06:55.092 +05:30 [INF] Executed DbCommand (11ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 1000), @p3='?' (Size = 200), @p4='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Departments] ([Id], [CreatedAt], [Description], [Name], [UpdatedAt])
+OUTPUT INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+2026-02-28 07:06:55.217 +05:30 [INF] HTTP POST /api/Department responded 201 in 1051.2476 ms
+2026-02-28 07:07:28.586 +05:30 [INF] Executed DbCommand (10ms) [Parameters=[@ToLower='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Departments] AS [d]
+        WHERE [d].[IsActive] = CAST(1 AS bit) AND LOWER([d].[Name]) = @ToLower) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 07:07:28.604 +05:30 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 1000), @p3='?' (Size = 200), @p4='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Departments] ([Id], [CreatedAt], [Description], [Name], [UpdatedAt])
+OUTPUT INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+2026-02-28 07:07:28.619 +05:30 [INF] HTTP POST /api/Department responded 201 in 150.1915 ms
+2026-02-28 07:08:23.578 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[@ToLower='?' (Size = 200)], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Departments] AS [d]
+        WHERE [d].[IsActive] = CAST(1 AS bit) AND LOWER([d].[Name]) = @ToLower) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-02-28 07:08:23.595 +05:30 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime2), @p2='?' (Size = 1000), @p3='?' (Size = 200), @p4='?' (DbType = DateTime2)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Departments] ([Id], [CreatedAt], [Description], [Name], [UpdatedAt])
+OUTPUT INSERTED.[IsActive]
+VALUES (@p0, @p1, @p2, @p3, @p4);
+2026-02-28 07:08:23.610 +05:30 [INF] HTTP POST /api/Department responded 201 in 56.7035 ms
+2026-02-28 07:08:35.281 +05:30 [INF] Executed DbCommand (6ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [d].[Id], [d].[CreatedAt], [d].[Description], [d].[IsActive], [d].[Name], [d].[UpdatedAt]
+FROM [Departments] AS [d]
+WHERE [d].[IsActive] = CAST(1 AS bit)
+2026-02-28 07:08:35.302 +05:30 [INF] HTTP GET /api/Department responded 200 in 112.3317 ms
+2026-02-28 07:08:46.058 +05:30 [INF] Executed DbCommand (13ms) [Parameters=[@id='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT TOP(1) [d].[Id], [d].[CreatedAt], [d].[Description], [d].[IsActive], [d].[Name], [d].[UpdatedAt]
+FROM [Departments] AS [d]
+WHERE [d].[Id] = @id AND [d].[IsActive] = CAST(1 AS bit)
+2026-02-28 07:08:46.066 +05:30 [INF] HTTP GET /api/Department/2D75154C-9E4B-4CC7-8F8F-3E1CC8ED00BD responded 200 in 64.0881 ms
+2026-02-28 07:30:46.725 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:30:47.896 +05:30 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:30:47.993 +05:30 [INF] Executed DbCommand (68ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+        FROM [sys].[extended_properties] AS [ep]
+        WHERE [ep].[minor_id] = 0
+            AND [ep].[class] = 1
+            AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2026-02-28 07:30:48.000 +05:30 [INF] Database ensured.
+2026-02-28 07:30:48.134 +05:30 [INF] Starting DepartmentMicroservice
+2026-02-28 07:30:48.523 +05:30 [INF] Now listening on: https://localhost:7022
+2026-02-28 07:30:48.527 +05:30 [INF] Now listening on: http://localhost:5202
+2026-02-28 07:30:48.609 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:30:48.612 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:30:48.616 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\DepartmentMicroservice
+2026-02-28 07:31:20.515 +05:30 [INF] HTTP GET / responded 404 in 2.9390 ms
+2026-02-28 07:31:24.808 +05:30 [INF] HTTP GET /scalar/v1 responded 200 in 75.2193 ms
+2026-02-28 07:31:25.354 +05:30 [INF] HTTP GET /openapi/v1.json responded 200 in 17.4320 ms
+2026-02-28 07:33:09.597 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:33:10.937 +05:30 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:33:11.025 +05:30 [INF] Executed DbCommand (60ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+        FROM [sys].[extended_properties] AS [ep]
+        WHERE [ep].[minor_id] = 0
+            AND [ep].[class] = 1
+            AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2026-02-28 07:33:11.034 +05:30 [INF] Database ensured.
+2026-02-28 07:33:11.168 +05:30 [INF] Starting DepartmentMicroservice
+2026-02-28 07:33:11.553 +05:30 [INF] Now listening on: https://localhost:7022
+2026-02-28 07:33:11.556 +05:30 [INF] Now listening on: http://localhost:5202
+2026-02-28 07:33:11.639 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:33:11.642 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:33:11.645 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\DepartmentMicroservice
+2026-02-28 07:42:12.876 +05:30 [INF] Ensuring database is created...
+2026-02-28 07:42:14.230 +05:30 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-02-28 07:42:14.319 +05:30 [INF] Executed DbCommand (60ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+
+IF EXISTS
+    (SELECT *
+     FROM [sys].[objects] o
+     WHERE [o].[type] = 'U'
+     AND [o].[is_ms_shipped] = 0
+     AND [o].[object_id] NOT IN (SELECT [ep].[major_id]
+        FROM [sys].[extended_properties] AS [ep]
+        WHERE [ep].[minor_id] = 0
+            AND [ep].[class] = 1
+            AND [ep].[name] = N'microsoft_database_tools_support'
+    )
+)
+SELECT 1 ELSE SELECT 0
+2026-02-28 07:42:14.329 +05:30 [INF] Database ensured.
+2026-02-28 07:42:14.490 +05:30 [INF] Starting DepartmentMicroservice
+2026-02-28 07:42:14.916 +05:30 [INF] Now listening on: https://localhost:7022
+2026-02-28 07:42:14.922 +05:30 [INF] Now listening on: http://localhost:5202
+2026-02-28 07:42:15.018 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-02-28 07:42:15.022 +05:30 [INF] Hosting environment: Development
+2026-02-28 07:42:15.026 +05:30 [INF] Content root path: C:\IrshadProjects\GIT\PracticeMicroservice\MicroservicesPractise\App\Backend\BackendAPI\DepartmentMicroservice

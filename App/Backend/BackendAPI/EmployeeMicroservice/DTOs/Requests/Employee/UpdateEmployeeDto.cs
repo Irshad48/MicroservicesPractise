@@ -22,7 +22,7 @@ namespace EmployeeMicroservice.DTOs.Requests.Employee
         [Range(0, double.MaxValue)]
         public decimal? Salary { get; set; }
 
-        public int? DepartmentId { get; set; }
+        public Guid? DepartmentId { get; set; }
 
         public bool? IsActive { get; set; }
     }

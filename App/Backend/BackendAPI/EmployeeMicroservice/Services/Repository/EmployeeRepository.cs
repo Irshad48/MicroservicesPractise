@@ -54,12 +54,13 @@ namespace EmployeeMicroservice.Services.Repository
             if (existingEmployee == null)
                 return null;
 
-            // Update the UpdatedAt timestamp
-            employee.UpdatedAt = DateTime.UtcNow;
-            employee.Id = id; // Ensure ID matches
+            // If controller applied changes to the tracked instance 'employee' (from GetByIdAsync),
+            // we can just update UpdatedAt on the tracked entity and return it.
+            // Avoid blanket SetValues to prevent overwriting DB values with defaults.
+            existingEmployee.UpdatedAt = DateTime.UtcNow;
 
-            // Copy all properties from input to existing entity
-            _context.Entry(existingEmployee).CurrentValues.SetValues(employee);
+            // If 'employee' parameter is a different instance (rare here), copy only non-default values.
+            // But typical controller flow maps onto the tracked entity, so no further copy is needed.
 
             // Save changes will be handled by UnitOfWork
             return existingEmployee;

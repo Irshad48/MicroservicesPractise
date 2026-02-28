@@ -7,6 +7,7 @@ using EmployeeMicroservice.DTOs.Responses.EmployeeSkill;
 using EmployeeMicroservice.DTOs.Responses.Skill;
 using EmployeeMicroservice.Models;
 using EmployeeMicroservice.Models.Entities;
+using System;
 
 namespace EmployeeMicroservice.Helpers
 {
@@ -14,8 +15,10 @@ namespace EmployeeMicroservice.Helpers
     {
         public MappingProfiles()
         {
-            // Employee mappings
-            CreateMap<Employee, EmployeeResponseDto>();
+            // Employee mappings - map EmployeeSkills -> Skills property on response
+            CreateMap<Employee, EmployeeResponseDto>()
+                .ForMember(dest => dest.Skills, opt => opt.MapFrom(src => src.EmployeeSkills));
+
             CreateMap<CreateEmployeeDto, Employee>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
@@ -43,14 +46,15 @@ namespace EmployeeMicroservice.Helpers
                 .ForMember(dest => dest.EmployeeSkills, opt => opt.Ignore())
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            // EmployeeSkill mappings - THIS IS WHAT YOU'RE MISSING
+            // EmployeeSkill mappings - do NOT include employee fields in the compact skill response
             CreateMap<EmployeeSkill, EmployeeSkillResponseDto>()
+                .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.EmployeeId))
                 .ForMember(dest => dest.SkillName, opt => opt.MapFrom(src => src.Skill != null ? src.Skill.Name : null))
                 .ForMember(dest => dest.SkillCategory, opt => opt.MapFrom(src => src.Skill != null ? src.Skill.Category : null))
-                .ForMember(dest => dest.ProficiencyLevel, opt => opt.MapFrom(src => src.ProficiencyLevel.ToString()));
+                .ForMember(dest => dest.ProficiencyLevel, opt => opt.MapFrom(src => src.ProficiencyLevel.ToString()))
+                .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(src => src.CreatedAt));
 
             CreateMap<AssignSkillDto, EmployeeSkill>()
-                //.ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Employee, opt => opt.Ignore())
                 .ForMember(dest => dest.Skill, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
@@ -61,11 +65,11 @@ namespace EmployeeMicroservice.Helpers
                 .ForMember(dest => dest.SkillId, opt => opt.Ignore())
                 .ForMember(dest => dest.Employee, opt => opt.Ignore())
                 .ForMember(dest => dest.Skill, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())             
                 .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(src => DateTime.UtcNow))
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
-            // For SkillDetailResponseDto's Employee details
+            // For SkillDetailResponseDto's Employee details (keep full info here)
             CreateMap<EmployeeSkill, EmployeeSkillDetailDto>()
                 .ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(src => src.Employee.Id))
                 .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => $"{src.Employee.FirstName} {src.Employee.LastName}"))

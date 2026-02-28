@@ -5,6 +5,7 @@ using EmployeeMicroservice.Services.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace EmployeeMicroservice.Services.Repository
@@ -15,10 +16,22 @@ namespace EmployeeMicroservice.Services.Repository
         {
         }
 
+        // Ensure employees are returned with their skills (eager load)
+        public async Task<IEnumerable<Employee>> GetAllAsync()
+        {
+            return await _context.Employees
+                .Where(e => e.IsActive)
+                .Include(e => e.EmployeeSkills)
+                    .ThenInclude(es => es.Skill)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Employee>> GetByDepartmentIdAsync(Guid departmentId)
         {
             return await _context.Employees
                 .Where(e => e.DepartmentId == departmentId && e.IsActive)
+                .Include(e => e.EmployeeSkills)
+                    .ThenInclude(es => es.Skill)
                 .ToListAsync();
         }
 
@@ -37,7 +50,19 @@ namespace EmployeeMicroservice.Services.Repository
         public async Task<Employee?> GetByEmailAsync(string email)
         {
             return await _context.Employees
+                .Include(e => e.EmployeeSkills)
+                    .ThenInclude(es => es.Skill)
                 .FirstOrDefaultAsync(e => e.Email == email);
+        }
+
+        // Return employee with navigation properties loaded.
+        // Important: Do NOT use AsNoTracking here so controller mapping updates the tracked entity.
+        public async Task<Employee?> GetByIdAsync(Guid id)
+        {
+            return await _context.Employees
+                .Include(e => e.EmployeeSkills)
+                    .ThenInclude(es => es.Skill)
+                .FirstOrDefaultAsync(e => e.Id == id && e.IsActive);
         }
 
         // Implement the interface method (maps to base AddAsync)
@@ -47,22 +72,16 @@ namespace EmployeeMicroservice.Services.Repository
             return await base.AddAsync(employee);
         }
 
-        // Implement the interface method with proper signature
+        // Updated UpdateAsync: controller maps onto the tracked entity (from GetByIdAsync),
+        // so just update timestamp and return the tracked instance.
         public async Task<Employee?> UpdateAsync(Guid id, Employee employee)
         {
             var existingEmployee = await GetByIdAsync(id);
             if (existingEmployee == null)
                 return null;
 
-            // If controller applied changes to the tracked instance 'employee' (from GetByIdAsync),
-            // we can just update UpdatedAt on the tracked entity and return it.
-            // Avoid blanket SetValues to prevent overwriting DB values with defaults.
             existingEmployee.UpdatedAt = DateTime.UtcNow;
 
-            // If 'employee' parameter is a different instance (rare here), copy only non-default values.
-            // But typical controller flow maps onto the tracked entity, so no further copy is needed.
-
-            // Save changes will be handled by UnitOfWork
             return existingEmployee;
         }
 

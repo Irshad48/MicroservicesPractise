@@ -4,13 +4,11 @@ namespace EmployeeMicroservice.DTOs.Responses.EmployeeSkill
 {
     public class EmployeeSkillResponseDto
     {
-        // Employee Info
-        public Guid EmployeeId { get; set; }
-        public string EmployeeName { get; set; } = string.Empty;
-        public string EmployeeEmail { get; set; } = string.Empty;
+        // Skill relationship keys
+        public Guid EmployeeId { get; set; }    // ADDED: allow routing / callers to access EmployeeId
+        public Guid SkillId { get; set; }
 
         // Skill Info
-        public Guid SkillId { get; set; }
         public string SkillName { get; set; } = string.Empty;
         public string SkillCategory { get; set; } = string.Empty;
 

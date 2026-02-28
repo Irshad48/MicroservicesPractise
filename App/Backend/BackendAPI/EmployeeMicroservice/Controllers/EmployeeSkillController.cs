@@ -65,7 +65,6 @@ namespace EmployeeMicroservice.Controllers
                 var skillEmployees = await _unitOfWork.EmployeeSkills
                     .GetSkillEmployeesWithDetailsAsync(skillId);
 
-                // Use EmployeeSkillResponseDto instead of the missing EmployeeSkillEmployeeResponseDto
                 var employeeDtos = _mapper.Map<IEnumerable<EmployeeSkillResponseDto>>(skillEmployees);
                 return Ok(employeeDtos);
             }
@@ -117,8 +116,11 @@ namespace EmployeeMicroservice.Controllers
                     await _unitOfWork.SaveChangesAsync();
                 }
 
-                var result = _mapper.Map<EmployeeSkillResponseDto>(created);
-                return CreatedAtAction(nameof(GetEmployeeSkills), new { employeeId = result.EmployeeId }, result);
+                // Map entity to DTO for response
+                var dto = _mapper.Map<EmployeeSkillResponseDto>(created);
+
+                // Use the created entity's EmployeeId for the CreatedAtAction route (DTO does not include employee fields)
+                return CreatedAtAction(nameof(GetEmployeeSkills), new { employeeId = created.EmployeeId }, dto);
             }
             catch (Exception ex)
             {
@@ -141,7 +143,6 @@ namespace EmployeeMicroservice.Controllers
                 if (employeeSkill == null)
                     return NotFoundResponse("EmployeeSkill", $"{employeeId}-{skillId}");
 
-                // Update properties if they are provided in the DTO
                 if (updateDto.ProficiencyLevel.HasValue)
                     employeeSkill.ProficiencyLevel = updateDto.ProficiencyLevel.Value;
 
@@ -162,7 +163,6 @@ namespace EmployeeMicroservice.Controllers
                 if (!saved)
                     return BadRequestResponse("Failed to update skill assignment.");
 
-                // Handle primary skill changes
                 if (updateDto.IsPrimarySkill.HasValue && updateDto.IsPrimarySkill.Value == true)
                 {
                     await _unitOfWork.EmployeeSkills.SetPrimarySkillAsync(employeeId, skillId);
@@ -193,11 +193,6 @@ namespace EmployeeMicroservice.Controllers
                 if (employeeSkill == null)
                     return NotFoundResponse("EmployeeSkill", $"{employeeId}-{skillId}");
 
-                // For composite key, we need to remove using the entity
-                // Since we're using UnitOfWork pattern, we need to add a specific delete method
-                // For now, let's assume we have access to context or add a method
-
-                // Option 1: If your repository has a Delete method that takes the entity
                 var deleted = await _unitOfWork.EmployeeSkills.DeleteEmployeeSkillAsync(employeeId, skillId);
 
                 if (!deleted)

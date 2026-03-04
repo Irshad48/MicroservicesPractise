@@ -7,22 +7,22 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Linq; 
+using System.Threading.Tasks;
 
 namespace EmployeeMicroservice.Controllers
 {
     public class EmployeeController : BaseApiController
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
 
         public EmployeeController(
             ILogger<EmployeeController> logger,
-            IUnitOfWork unitOfWork,
+            IEmployeeService employeeService,
             IMapper mapper) : base(logger)
         {
-            _unitOfWork = unitOfWork;
+            _employeeService = employeeService;
             _mapper = mapper;
         }
 
@@ -33,7 +33,7 @@ namespace EmployeeMicroservice.Controllers
             try
             {
                 _logger.LogInformation("Getting all employees");
-                var employees = await _unitOfWork.Employees.GetAllAsync();
+                var employees = await _employeeService.GetAllAsync();
                 var employeeDtos = _mapper.Map<IEnumerable<EmployeeResponseDto>>(employees);
 
                 _logger.LogInformation("Retrieved {Count} employees", employeeDtos.Count());
@@ -52,7 +52,7 @@ namespace EmployeeMicroservice.Controllers
             try
             {
                 _logger.LogInformation("Getting employee with ID: {Id}", id);
-                var employee = await _unitOfWork.Employees.GetByIdAsync(id);
+                var employee = await _employeeService.GetByIdAsync(id);
 
                 if (employee == null)
                 {
@@ -74,32 +74,17 @@ namespace EmployeeMicroservice.Controllers
         {
             try
             {
-                _logger.LogInformation("Creating new employee with email: {Email}", createEmployeeDto.Email);
-
-                // Check if email already exists
-                if (await _unitOfWork.Employees.EmailExistsAsync(createEmployeeDto.Email))
-                {
-                    return BadRequestResponse($"Email '{createEmployeeDto.Email}' is already in use.");
-                }
 
                 // Map DTO to Employee entity
                 var employee = _mapper.Map<Employee>(createEmployeeDto);
 
-                // Create employee
-                var createdEmployee = await _unitOfWork.Employees.CreateAsync(employee);
+                var createdEmployee = await _employeeService.CreateAsync(employee);
 
-                // Save changes
-                var saved = await _unitOfWork.SaveChangesAsync();
-                if (!saved)
-                {
-                    return BadRequestResponse("Failed to save employee to database.");
-                }
-
-                // Map to response DTO
                 var employeeDto = _mapper.Map<EmployeeResponseDto>(createdEmployee);
 
-                _logger.LogInformation("Employee created with ID: {Id}", employeeDto.Id);
-                return CreatedAtAction(nameof(GetEmployeeById), new { id = employeeDto.Id }, employeeDto);
+                return CreatedAtAction(nameof(GetEmployeeById),
+                    new { id = employeeDto.Id },
+                    employeeDto);
             }
             catch (Exception ex)
             {
@@ -113,46 +98,17 @@ namespace EmployeeMicroservice.Controllers
         {
             try
             {
-                _logger.LogInformation("Updating employee with ID: {Id}", id);
+                var employeeToUpdate = _mapper.Map<Employee>(updateEmployeeDto);
 
-                // Check if employee exists
-                var existingEmployee = await _unitOfWork.Employees.GetByIdAsync(id);
-                if (existingEmployee == null)
+                var updatedEmployee = await _employeeService.UpdateAsync(id, employeeToUpdate);
+
+                if (updatedEmployee == null)
                 {
                     return NotFoundResponse("Employee", id);
                 }
 
-                // Check if email is being changed and if it already exists
-                if (!string.IsNullOrEmpty(updateEmployeeDto.Email) &&
-                    updateEmployeeDto.Email != existingEmployee.Email)
-                {
-                    if (await _unitOfWork.Employees.EmailExistsAsync(updateEmployeeDto.Email, id))
-                    {
-                        return BadRequestResponse($"Email '{updateEmployeeDto.Email}' is already in use.");
-                    }
-                }
-
-                // Map update DTO to existing employee
-                _mapper.Map(updateEmployeeDto, existingEmployee);
-
-                // Update employee
-                var updatedEmployee = await _unitOfWork.Employees.UpdateAsync(id, existingEmployee);
-                if (updatedEmployee == null)
-                {
-                    return BadRequestResponse("Failed to update employee.");
-                }
-
-                // Save changes
-                var saved = await _unitOfWork.SaveChangesAsync();
-                if (!saved)
-                {
-                    return BadRequestResponse("Failed to save updated employee to database.");
-                }
-
-                // Map to response DTO
                 var employeeDto = _mapper.Map<EmployeeResponseDto>(updatedEmployee);
 
-                _logger.LogInformation("Employee with ID: {Id} updated successfully", id);
                 return Ok(employeeDto);
             }
             catch (Exception ex)
@@ -166,24 +122,14 @@ namespace EmployeeMicroservice.Controllers
         {
             try
             {
-                _logger.LogInformation("Patching employee with ID: {Id}", id);
+                var existingEmployee = await _employeeService.GetByIdAsync(id);
 
-                var existingEmployee = await _unitOfWork.Employees.GetByIdAsync(id);
                 if (existingEmployee == null)
                 {
                     return NotFoundResponse("Employee", id);
                 }
 
-                // If email provided, validate uniqueness
-                if (!string.IsNullOrEmpty(patchDto.Email) && patchDto.Email != existingEmployee.Email)
-                {
-                    if (await _unitOfWork.Employees.EmailExistsAsync(patchDto.Email, id))
-                    {
-                        return BadRequestResponse($"Email '{patchDto.Email}' is already in use.");
-                    }
-                }
-
-                // Apply only provided fields
+                // Apply patch manually
                 if (patchDto.FirstName != null) existingEmployee.FirstName = patchDto.FirstName;
                 if (patchDto.LastName != null) existingEmployee.LastName = patchDto.LastName;
                 if (patchDto.Email != null) existingEmployee.Email = patchDto.Email;
@@ -193,23 +139,11 @@ namespace EmployeeMicroservice.Controllers
                 if (patchDto.DepartmentId.HasValue) existingEmployee.DepartmentId = patchDto.DepartmentId.Value;
                 if (patchDto.IsActive.HasValue) existingEmployee.IsActive = patchDto.IsActive.Value;
 
-                existingEmployee.UpdatedAt = DateTime.UtcNow;
+                var updated = await _employeeService.UpdateAsync(id, existingEmployee);
 
-                var updatedEmployee = await _unitOfWork.Employees.UpdateAsync(id, existingEmployee);
-                if (updatedEmployee == null)
-                {
-                    return BadRequestResponse("Failed to update employee.");
-                }
+                var dto = _mapper.Map<EmployeeResponseDto>(updated);
 
-                var saved = await _unitOfWork.SaveChangesAsync();
-                if (!saved)
-                {
-                    return BadRequestResponse("Failed to save updated employee to database.");
-                }
-
-                var employeeDto = _mapper.Map<EmployeeResponseDto>(updatedEmployee);
-                _logger.LogInformation("Employee with ID: {Id} patched successfully", id);
-                return Ok(employeeDto);
+                return Ok(dto);
             }
             catch (Exception ex)
             {
@@ -223,41 +157,14 @@ namespace EmployeeMicroservice.Controllers
         {
             try
             {
-                _logger.LogInformation("Deleting employee with ID: {Id}", id);
+                var deleted = await _employeeService.DeleteAsync(id);
 
-                var employee = await _unitOfWork.Employees.GetByIdAsync(id);
-                if (employee == null)
+                if (!deleted)
                 {
                     return NotFoundResponse("Employee", id);
                 }
 
-                // Idempotent behavior: if already soft-deleted, return 204 No Content
-                if (!employee.IsActive)
-                {
-                    return NoContent();
-                }
-
-                // Soft delete
-                employee.IsActive = false;
-                employee.UpdatedAt = DateTime.UtcNow;
-
-                var updated = await _unitOfWork.Employees.UpdateAsync(id, employee);
-                if (updated == null)
-                {
-                    return BadRequestResponse("Failed to delete employee.");
-                }
-
-                var saved = await _unitOfWork.SaveChangesAsync();
-                if (!saved)
-                {
-                    return BadRequestResponse("Failed to save deletion to database.");
-                }
-
-                // Return the updated resource so clients can see IsActive/UpdatedAt
-                var dto = _mapper.Map<EmployeeResponseDto>(updated);
-
-                _logger.LogInformation("Employee with ID: {Id} deleted successfully", id);
-                return Ok(dto);
+                return NoContent();
             }
             catch (Exception ex)
             {
@@ -272,7 +179,7 @@ namespace EmployeeMicroservice.Controllers
             try
             {
                 _logger.LogInformation("Getting employees for department ID: {DepartmentId}", departmentId);
-                var employees = await _unitOfWork.Employees.GetByDepartmentIdAsync(departmentId);
+                var employees = await _employeeService.GetByDepartmentIdAsync(departmentId);
                 var employeeDtos = _mapper.Map<IEnumerable<EmployeeResponseDto>>(employees);
 
                 _logger.LogInformation("Retrieved {Count} employees for department {DepartmentId}",

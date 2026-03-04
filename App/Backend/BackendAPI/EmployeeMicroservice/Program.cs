@@ -1,14 +1,16 @@
 using EmployeeMicroservice.Data;
 using EmployeeMicroservice.Helpers;
 using EmployeeMicroservice.Interfaces;
+using EmployeeMicroservice.Services;
+using EmployeeMicroservice.Services.External;
 using EmployeeMicroservice.Services.Repository;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using Serilog;
 using System.Reflection;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Scalar.AspNetCore; // Make sure this NuGet package is installed
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,7 +54,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfiles));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
-
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 // Add OpenAPI/Swagger document generation
 builder.Services.AddOpenApi("v1", options =>
 {
@@ -76,6 +78,12 @@ builder.Services.AddOpenApi("v1", options =>
         return Task.CompletedTask;
     });
 });
+builder.Services.AddHttpClient<IDepartmentServiceClient, DepartmentServiceClient>(client =>
+{
+    client.BaseAddress = new Uri(
+        builder.Configuration["ServiceUrls:DepartmentService"]);
+})
+.SetHandlerLifetime(TimeSpan.FromMinutes(5));
 
 // Add CORS
 builder.Services.AddCors(options =>
